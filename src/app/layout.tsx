@@ -13,8 +13,8 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata: Metadata = {
-  title: "Método de la Regla Falsa",
-  description: "Calculadora numérica para el método de la regla falsa",
+  title: "Método de la falsa posición",
+  description: "Calculadora numérica para el método de la falsa posición",
 };
 
 export default function RootLayout({

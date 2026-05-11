@@ -147,7 +147,7 @@ export default function FalsePositionApp() {
         <div className="max-w-5xl mx-auto px-4 flex items-center gap-3">
           <Calculator className="text-teal-600" size={28} />
           <h1 className="text-2xl font-bold text-slate-800">
-            Método de la Regla Falsa
+            Método de la falsa posición
           </h1>
         </div>
       </header>
