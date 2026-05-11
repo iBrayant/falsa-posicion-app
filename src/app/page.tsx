@@ -25,11 +25,12 @@ interface IterationData {
 }
 
 export default function FalsePositionApp() {
-  const [func, setFunc] = useState("x^3 - x - 1");
-  const [valA, setValA] = useState("1");
-  const [valB, setValB] = useState("2");
-  const [tol, setTol] = useState("0.001");
-  const [maxIter, setMaxIter] = useState("50");
+  // Valores por defecto al cargar la página. Aquí se configuran los parámetros iniciales del método:
+  const [func, setFunc] = useState("x^3 - x - 1"); // Función matemática a evaluar f(x)
+  const [valA, setValA] = useState("1");           // Límite inferior del intervalo (a)
+  const [valB, setValB] = useState("2");           // Límite superior del intervalo (b)
+  const [tol, setTol] = useState("0.001");         // Umbral mínimo de error permitido (Tolerancia)
+  const [maxIter, setMaxIter] = useState("50");    // Límite máximo de iteraciones para evitar bucles infinitos
 
   const [results, setResults] = useState<IterationData[]>([]);
   const [root, setRoot] = useState<number | null>(null);
