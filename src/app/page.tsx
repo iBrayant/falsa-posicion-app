@@ -55,6 +55,7 @@ export default function FalsePositionApp() {
     setHasCalculated(true);
 
     try {
+      // 1. Lectura de las variables ingresadas por el usuario
       let a = parseFloat(valA);
       let b = parseFloat(valB);
       const tolerance = parseFloat(tol);
@@ -64,11 +65,13 @@ export default function FalsePositionApp() {
         throw new Error("Por favor, ingresa valores numéricos válidos.");
       }
 
+      // 2. Conversión de la función matemática: convierte el texto a una función ejecutable
       const f = (x: number) => evaluate(func, { x });
 
       let f_a = f(a);
       let f_b = f(b);
 
+      // 3. Validación inicial del Teorema de Bolzano: f(a) y f(b) deben tener signos opuestos
       if (f_a * f_b >= 0) {
         throw new Error("Intervalo inválido: f(a) y f(b) deben tener signos opuestos.");
       }
@@ -79,17 +82,21 @@ export default function FalsePositionApp() {
       let x_i = 0;
       let f_xi = 0;
 
+      // 4. El bucle de iteración: El método se repite hasta hallar la raíz o agotar iteraciones
       while (iter < maxI) {
         iter++;
         
+        // Evitamos división por cero si la línea es horizontal
         const denominator = f_b - f_a;
         if (Math.abs(denominator) < 1e-15) {
           throw new Error("División por cero en el cálculo de X_i.");
         }
 
+        // 4A. La fórmula de la Falsa Posición: calcula la nueva aproximación
         x_i = (a * f_b - b * f_a) / denominator;
-        f_xi = f(x_i);
+        f_xi = f(x_i); // Evaluamos el nuevo punto en la función
 
+        // Guardamos los datos de esta iteración para mostrarlos en la tabla
         iterData.push({
           n: iter,
           a: a,
@@ -100,18 +107,22 @@ export default function FalsePositionApp() {
 
         if (Math.abs(f_xi) == 0) {
           rootFound = true;
-          break;
+          break; // Encontramos la raíz exacta
         }
 
+        // 4B. Criterio de parada: ¿Estamos por debajo de la tolerancia permitida?
         if (Math.abs(f_xi) < tolerance) {
           rootFound = true;
-          break;
+          break; // Detenemos la búsqueda
         }
 
+        // 4C. Actualización del intervalo: ¿De qué lado quedó la raíz?
         if (f_a * f_xi < 0) {
+          // La raíz está entre 'a' y 'x_i'. Movemos el límite superior ('b') al centro.
           b = x_i;
-          f_b = f_xi; // f_b is updated implicitly since b is updated
+          f_b = f_xi; 
         } else {
+          // La raíz está entre 'x_i' y 'b'. Movemos el límite inferior ('a') al centro.
           a = x_i;
           f_a = f_xi;
         }
