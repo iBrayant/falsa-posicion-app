@@ -60,6 +60,6 @@ Con `f(x) = x^3 − x − 1`, intervalo `[1, 2]`, tolerancia `0.001` y 50 iterac
 
 ## Autor
 
-**Brayant Vásquez Gómez** · [GitHub](https://github.com/iBrayant) · [LinkedIn](https://linkedin.com/in/brayant-vásquez-gómez)
+**Brayant Vásquez Gómez** · [GitHub](https://github.com/iBrayant) · [LinkedIn](https://www.linkedin.com/in/brayant-v%C3%A1squez-g%C3%B3mez-4b483a1a1)
 
 Licencia [MIT](LICENSE).
