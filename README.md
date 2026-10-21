@@ -1,36 +1,65 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+# Método de la Falsa Posición
 
-## Getting Started
+![Next.js](https://img.shields.io/badge/Next.js-16-000000?logo=nextdotjs&logoColor=white)
+![TypeScript](https://img.shields.io/badge/TypeScript-3178C6?logo=typescript&logoColor=white)
+![Tailwind CSS](https://img.shields.io/badge/Tailwind-3-06B6D4?logo=tailwindcss&logoColor=white)
+![Licencia](https://img.shields.io/badge/licencia-MIT-green)
 
-First, run the development server:
+Calculadora web del **método de la falsa posición** (*regula falsi*) para encontrar raíces de ecuaciones. Escribes la función `f(x)`, el intervalo `[a, b]`, la tolerancia y el máximo de iteraciones, y la app muestra la raíz aproximada, la tabla de iteraciones y la gráfica de la función.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
+> Proyecto académico — Ingeniería de Sistemas y Computación, Universidad de Cundinamarca.
+
+<!-- TODO: captura o GIF de la app (guardar en docs/img/) -->
+<!-- ![Demo](docs/img/demo.png) -->
+<!-- TODO: enlace a la demo desplegada en Vercel -->
+
+## Características
+
+- **Entrada flexible:** cualquier expresión que entienda [math.js](https://mathjs.org/) (por ejemplo `x^3 - x - 1`, `cos(x) - x`, `exp(x) - 3`).
+- **Vista previa en LaTeX** de la función mientras se escribe, renderizada con KaTeX.
+- **Tabla de iteraciones** con `a`, `b`, `x_i` y `f(x_i)` de cada paso.
+- **Gráfica de la función** con la raíz encontrada.
+- **Validación del intervalo:** verifica que `f(a)` y `f(b)` tengan signos opuestos (teorema de Bolzano) y evita la división por cero.
+- **Manejo de errores:** avisa si la sintaxis es inválida o no se alcanza la tolerancia en el máximo de iteraciones.
+- **Lógica separada de la interfaz:** el algoritmo vive en `src/math/falsaPosicion.ts`, comentado paso a paso.
+
+## El método
+
+Es un método cerrado: necesita un intervalo `[a, b]` donde `f(a)` y `f(b)` tengan signos opuestos. En cada iteración se traza la recta entre `(a, f(a))` y `(b, f(b))` y se toma el punto donde cruza el eje X:
+
+```
+x_i = (a · f(b) − b · f(a)) / (f(b) − f(a))
 ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+Luego el intervalo se reduce al subintervalo donde sigue habiendo cambio de signo. La iteración se detiene cuando `|f(x_i)|` es menor que la tolerancia o se alcanza el máximo de iteraciones.
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## Stack
 
-This project uses [`next/font`](https://nextjs.org/docs/app/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
+Next.js (App Router) · React · TypeScript · Tailwind CSS · math.js · KaTeX · Recharts · Lucide
 
-## Learn More
+## Estructura
 
-To learn more about Next.js, take a look at the following resources:
+```
+src/
+├── app/page.tsx            -> interfaz: formulario, tabla y gráfica
+└── math/falsaPosicion.ts   -> algoritmo de falsa posición (sin dependencias de React)
+```
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+## Cómo correrlo
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+```bash
+npm install
+npm run dev
+```
 
-## Deploy on Vercel
+Abre http://localhost:3000. Para compilar: `npm run build && npm start`.
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
+## Ejemplo
 
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Con `f(x) = x^3 − x − 1`, intervalo `[1, 2]`, tolerancia `0.001` y 50 iteraciones, el método converge en 9 iteraciones a `x ≈ 1.3245` (la raíz real es 1.3247).
+
+## Autor
+
+**Brayant Vásquez Gómez** · [GitHub](https://github.com/iBrayant) · [LinkedIn](https://linkedin.com/in/brayant-vásquez-gómez)
+
+Licencia [MIT](LICENSE).
